@@ -1,16 +1,18 @@
 version: 1
 backend:
   phases:
-    build:
+    preBuild:
       commands:
         - npm install
+        - npm install @parcel/watcher-linux-x64-glibc --save-optional
+    build:
+      commands:
         - npx ampx generate outputs --branch $AWS_BRANCH --app-id $AWS_APP_ID
 frontend:
   phases:
     preBuild:
       commands:
         - npm install
-        - npm install @parcel/watcher-linux-x64-glibc --no-optional
     build:
       commands:
         - npm run build
