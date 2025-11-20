@@ -4,9 +4,15 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 3000
+    port: 3000,
+    watch: {
+      usePolling: true
+    }
   },
   build: {
-    outDir: 'dist'
+    outDir: 'dist',
+    rollupOptions: {
+      external: process.env.NODE_ENV === 'production' ? ['@parcel/watcher'] : []
+    }
   }
 })

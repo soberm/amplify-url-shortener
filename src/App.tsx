@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Amplify } from 'aws-amplify';
 import { Authenticator } from '@aws-amplify/ui-react';
 import { generateClient } from 'aws-amplify/api';
@@ -7,11 +7,10 @@ import '@aws-amplify/ui-react/styles.css';
 import './styles/index.css';
 
 import { UrlType, UrlShortenerProps } from './types';
-import { generateShortCode } from './utils';
 import { UrlInput } from './components/UrlInput';
 import { UrlCard } from './components/UrlCard';
 import { LandingPage } from './components/LandingPage';
-import outputs from './amplify_outputs.json';
+import outputs from '../amplify_outputs.json';
 import type { Schema } from '../amplify/data/resource';
 
 type Client = ReturnType<typeof generateClient<Schema>>;
