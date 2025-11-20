@@ -11,8 +11,14 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
+    sourcemap: false,
     rollupOptions: {
-      external: process.env.NODE_ENV === 'production' ? ['@parcel/watcher'] : []
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          aws: ['aws-amplify', '@aws-amplify/ui-react']
+        }
+      }
     }
   }
 })

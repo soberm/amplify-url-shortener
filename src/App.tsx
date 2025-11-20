@@ -49,7 +49,7 @@ function App() {
   return (
     <Authenticator>
       {({ signOut, user }) => (
-        <UrlShortener signOut={signOut} user={user} />
+        <UrlShortener signOut={signOut || (() => {})} user={user} />
       )}
     </Authenticator>
   );
@@ -92,12 +92,17 @@ function UrlShortener({ signOut }: UrlShortenerProps) {
       const session = await fetchAuthSession();
       const token = session.tokens?.idToken?.toString();
       
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json'
+      };
+      
+      if (token) {
+        headers['Authorization'] = token;
+      }
+      
       const response = await fetch(`${apiEndpoint}shorten`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': token
-        },
+        headers,
         body: JSON.stringify({ originalUrl })
       });
       
