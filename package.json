@@ -1,0 +1,42 @@
+{
+  "name": "url-shortener",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "react-scripts start",
+    "deploy": "npx ampx sandbox",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@aws-amplify/backend": "^1.18.0",
+    "@aws-amplify/cli-core": "^2.2.2",
+    "@aws-amplify/ui-react": "^6.13.1",
+    "@aws-sdk/client-dynamodb": "^3.936.0",
+    "@aws-sdk/lib-dynamodb": "^3.936.0",
+    "@types/aws-lambda": "^8.10.159",
+    "aws-amplify": "^6.15.8",
+    "aws-cdk-lib": "^2.225.0",
+    "constructs": "^10.4.3",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-scripts": "^5.0.1"
+  },
+  "devDependencies": {
+    "@aws-amplify/backend-cli": "^1.8.0",
+    "@types/react": "^19.2.6",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
