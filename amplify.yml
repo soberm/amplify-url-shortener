@@ -5,6 +5,7 @@ backend:
       commands:
         - rm -rf node_modules package-lock.json
         - npm install
+        - npm install @parcel/watcher-linux-x64-glibc --save-optional
         - npm install @rollup/rollup-linux-x64-gnu --save-optional
     build:
       commands:
