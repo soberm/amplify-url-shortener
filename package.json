@@ -13,6 +13,7 @@
     "deploy": "npx ampx sandbox"
   },
   "dependencies": {
+    "@aws-amplify/ai-constructs": "1.2.1",
     "@aws-amplify/backend": "^1.18.0",
     "@aws-amplify/ui-react": "^6.13.1",
     "@aws-sdk/client-dynamodb": "^3.936.0",
