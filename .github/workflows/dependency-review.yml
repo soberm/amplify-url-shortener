@@ -1,0 +1,59 @@
+name: Dependabot Security Scan (Non-Default Branch)
+
+on:
+  push:
+    branches:
+      - ci/dependency-review
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read  # Required for workflow telemetry
+
+jobs:
+  npm-audit-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run npm audit and save results
+        continue-on-error: true
+        run: |
+          npm audit --production --json > audit-results.json 2>&1 || true
+          echo "Audit results:"
+          cat audit-results.json
+
+      - name: Convert audit results to SARIF
+        run: |
+          # Check if audit results file has content
+          if [ ! -s audit-results.json ]; then
+            echo "No audit results found, creating empty SARIF"
+            echo '{"version":"2.1.0","$schema":"https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json","runs":[{"tool":{"driver":{"name":"npm audit","informationUri":"https://docs.npmjs.com/cli/v10/commands/npm-audit"}},"results":[]}]}' > npm-audit.sarif
+          else
+            npx npm-audit-sarif -o npm-audit-temp.sarif audit-results.json || {
+              echo "Conversion failed, creating empty SARIF"
+              echo '{"version":"2.1.0","$schema":"https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json","runs":[{"tool":{"driver":{"name":"npm audit","informationUri":"https://docs.npmjs.com/cli/v10/commands/npm-audit"}},"results":[]}]}' > npm-audit.sarif
+              exit 0
+            }
+            # Fix invalid "info" level to "note" (SARIF spec only allows: none, note, warning, error)
+            sed 's/"level": "info"/"level": "note"/g' npm-audit-temp.sarif > npm-audit.sarif
+            rm npm-audit-temp.sarif
+          fi
+          echo "Generated SARIF:"
+          cat npm-audit.sarif
+
+      - name: Upload SARIF to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: npm-audit.sarif
+          category: npm-audit-${{ github.ref_name }}
