@@ -8,9 +8,15 @@ const docClient = DynamoDBDocumentClient.from(client);
 export const handler: APIGatewayProxyHandler = async (event) => {
   const shortCode = event.pathParameters?.shortCode;
   
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type,Authorization',
+  };
+
   if (!shortCode) {
     return {
       statusCode: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       body: JSON.stringify({ error: 'Short code is required' })
     };
   }
@@ -27,6 +33,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     if (!result.Items || result.Items.length === 0) {
       return {
         statusCode: 404,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         body: JSON.stringify({ error: 'Short URL not found' })
       };
     }
@@ -35,6 +42,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     return {
       statusCode: 302,
       headers: {
+        ...corsHeaders,
         Location: url.originalUrl
       },
       body: ''
@@ -43,6 +51,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     console.error('Error:', error);
     return {
       statusCode: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       body: JSON.stringify({ error: 'Internal server error' })
     };
   }

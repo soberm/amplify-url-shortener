@@ -1,9 +1,9 @@
 {
   "auth": {
-    "user_pool_id": "us-east-1_PCVPEaYtP",
+    "user_pool_id": "us-east-1_GaVlP9jmn",
     "aws_region": "us-east-1",
-    "user_pool_client_id": "7ps36votlki3mfrcg24pn9mfm",
-    "identity_pool_id": "us-east-1:8da7d48d-18da-4ebb-9429-c3672dfecf34",
+    "user_pool_client_id": "77ta0lv36b9mot86kvv05jmsf7",
+    "identity_pool_id": "us-east-1:91a9cfc6-8970-4746-a1f0-1d4c370a86f7",
     "mfa_methods": [],
     "standard_required_attributes": [
       "email"
@@ -26,7 +26,7 @@
     "unauthenticated_identities_enabled": true
   },
   "data": {
-    "url": "https://3w6unkcqvjayreefsqcl4upunu.appsync-api.us-east-1.amazonaws.com/graphql",
+    "url": "https://ftvqoxwphvcbbksemwuzoqbgqu.appsync-api.us-east-1.amazonaws.com/graphql",
     "aws_region": "us-east-1",
     "default_authorization_type": "AMAZON_COGNITO_USER_POOLS",
     "authorization_types": [
@@ -117,7 +117,7 @@
   "custom": {
     "API": {
       "URL Shortener API": {
-        "endpoint": "https://jtgx45gvl8.execute-api.us-east-1.amazonaws.com/prod/",
+        "endpoint": "https://9oe4um4du5.execute-api.us-east-1.amazonaws.com/prod/",
         "region": "us-east-1",
         "apiName": "URL Shortener API"
       }
